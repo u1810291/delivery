@@ -16,8 +16,7 @@ from api_pickup.models import (
     ProductType, 
     Stock, 
     StatusCatalog, 
-    Locations
-)
+    Locations)
 from api_pickup.serializers import (
     GroupSerializer,
     UserSerializer,
@@ -35,13 +34,8 @@ from api_pickup.serializers import (
     ProductTypeSerializer, 
     StockSerializer, 
     StatusCatalogSerializer, 
-    LocationsSerializer
+    LocationsSerializer)
 
-)
-
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 
