@@ -15,8 +15,7 @@ from api_pickup.models import (
     ProductType, 
     Stock, 
     StatusCatalog, 
-    Locations
-)
+    Locations)
 
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
