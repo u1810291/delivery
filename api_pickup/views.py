@@ -38,8 +38,6 @@ from api_pickup.serializers import (
     LocationsSerializer
 
 )
-
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -47,9 +45,16 @@ from rest_framework.permissions import IsAuthenticated
 
 class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
-
+    def list(self, request):
+        queryset = Group.objects.all()
+        serializer_class = GroupSerializer(queryset, many=True)
+        return Response(serializer_class)
+    def post(self, request):
+        serializer_class = GroupSerializer(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserViewSet(viewsets.ViewSet):
     permission_classes = (IsAuthenticated,)
@@ -57,7 +62,7 @@ class UserViewSet(viewsets.ViewSet):
         queryset = User.objects.all()
         serializer_class = UserSerializer(queryset, many=True)
         return Response(serializer_class.data)
-    def post(self, request):
+    def create(self, request):
         serializer_class = UserSerializer(data=request.data)
         if serializer_class.is_valid():
             serializer_class.save()
@@ -82,24 +87,56 @@ class RoleViewSet(viewsets.ViewSet):
 # Users
 class PersonViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = Person.objects.all()
-    serializer_class = PersonSerializer
+    def list(self, request):
+        queryset = Person.objects.all()
+        serializer_class = PersonSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+    def post(self, request):
+        serializer_class = PersonSerializer(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ShipmentTypeViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = ShipmentType.objects.all()
-    serializer_class = ShipmentTypeSerializer
+    def list(self, request):
+        queryset = ShipmentType.objects.all()
+        serializer_class = ShipmentTypeSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+    def post(self, request):
+        serializer_class = ShipmentTypeSerializer(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PaymentTypeViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = PaymentType.objects.all()
-    serializer_class = PaymentTypeSerializer
+    def list(self, request):
+        queryset = PaymentType.objects.all()
+        serializer_class = PaymentTypeSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+    def post(self, request):
+        serializer_class = PaymentTypeSerializer(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProductTypeViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = ProductType.objects.all()
-    serializer_class = ProductTypeSerializer
+    def list(self, request):
+        queryset = ProductType.objects.all()
+        serializer_class = ProductTypeSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+    def post(self, request):
+        serializer_class = ProductTypeSerializer(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # # Shipments
 class ShipmentViewSet(viewsets.ViewSet):
@@ -116,57 +153,129 @@ class ShipmentViewSet(viewsets.ViewSet):
         return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class ProductViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    def list(self, request):
+        queryset = Product.objects.all()
+        serializer_class = ProductSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+    def post(self, request):
+        serializer_class = ProductSerializer(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LocationsViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = Locations.objects.all()
-    serializer_class = LocationsSerializer
+    def list(self, request):
+        queryset = Locations.objects.all()
+        serializer_class = LocationsSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+    def post(self, request):
+        serializer_class = LocationsSerializer(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class StatusCatalogViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = StatusCatalog.objects.all()
-    serializer_class = StatusCatalogSerializer
+    def list(self, request):
+        queryset = StatusCatalog.objects.all()
+        serializer_class = StatusCatalogSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+    def post(self, request):
+        serializer_class = StatusCatalogSerializer(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ShipmentStatusViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = ShipmentStatus.objects.all()
-    serializer_class = ShipmentStatusSerializer
+    def list(self, request):
+        queryset = ShipmentStatus.objects.all()
+        serializer_class = ShipmentStatusSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+    def post(self, request):
+        serializer_class = ShipmentStatusSerializer(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ShipmentDetailsViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = ShipmentDetails.objects.all()
-    serializer_class = ShipmentDetailsSerializer
+    def list(self, request):
+        queryset = ShipmentDetails.objects.all()
+        serializer_class = ShipmentDetailsSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+    def post(self, request):
+        serializer_class = ShipmentDetailsSerializer(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # # Products
 class StockViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = Stock.objects.all()
-    serializer_class = StockSerializer
+    def list(self, request):
+        queryset = Stock.objects.all()
+        serializer_class = StockSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+    def post(self, request):
+        serializer_class = StockSerializer(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProductDetailsViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = ProductDetails.objects.all()
-    serializer_class = ProductDetailsSerializer
+    def list(self, request):
+        queryset = ProductDetails.objects.all()
+        serializer_class = ProductDetailsSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+    def post(self, request):
+        serializer_class = ProductDetailsSerializer(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 # # Payments
 class PaymentDataViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = PaymentData.objects.all()
-    serializer_class = PaymentDataSerializer
+    def list(self, request):
+        queryset = PaymentData.objects.all()
+        serializer_class = PaymentDataSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+    def post(self, request):
+        serializer_class = PaymentDataSerializer(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PaymentDetailsViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = PaymentDetails.objects.all()
-    serializer_class = PaymentDetailsSerializer
+    def list(self, request):
+        queryset = PaymentDetails.objects.all()
+        serializer_class = PaymentDetailsSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+    def post(self, request):
+        serializer_class = PaymentDetailsSerializer(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
