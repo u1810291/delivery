@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.response import Response
 from api_pickup.models import (
     Role,
@@ -34,31 +34,47 @@ from api_pickup.serializers import (
     ProductTypeSerializer, 
     StockSerializer, 
     StatusCatalogSerializer, 
-    LocationsSerializer)
+    LocationsSerializer,
+    RegisterUserSerializer)
 
 from rest_framework.permissions import IsAuthenticated
 
 
-class GroupViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+
+class UserListView(generics.ListCreateAPIView):
+    """Handles creating and listing Users."""
+    queryset = User.objects.all()
+
+def create(self, request, *args, **kwargs):
+        serializer = RegisterUserSerializer(data=request.data)
+        if serializer.is_valid():
+            self.perform_create(serializer)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class GroupViewSet(viewsets.ViewSet):
+    # permission_classes = (IsAuthenticated,)
     def list(self, request):
         queryset = Group.objects.all()
         serializer_class = GroupSerializer(queryset, many=True)
-        return Response(serializer_class)
+        return Response(serializer_class.data)
     def post(self, request):
         serializer_class = GroupSerializer(data=request.data)
+        print("serializer class readed")
         if serializer_class.is_valid():
             serializer_class.save()
             return Response(serializer_class.data, status=status.HTTP_201_CREATED)
         return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserViewSet(viewsets.ViewSet):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     def list(self, request):
         queryset = User.objects.all()
         serializer_class = UserSerializer(queryset, many=True)
         return Response(serializer_class.data)
-    def create(self, request):
+    def post(self, request):
         serializer_class = UserSerializer(data=request.data)
         if serializer_class.is_valid():
             serializer_class.save()
