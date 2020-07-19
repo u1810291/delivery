@@ -40,6 +40,10 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [ # new
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
+    ],  
 }
 
 # Application definition
@@ -53,7 +57,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api_pickup',
     'corsheaders',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework.authtoken' # new
 ]
 
 MIDDLEWARE = [

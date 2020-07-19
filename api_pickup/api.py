@@ -2,7 +2,6 @@ from rest_framework import routers
 from api_pickup import views
 
 router = routers.DefaultRouter()
-# router.register(r'register', views.UserListView, basename='register')
 router.register(r'users', views.UserViewSet, basename='users')
 router.register(r'roles', views.RoleViewSet, basename='roles')
 router.register(r'groups', views.GroupViewSet, basename='groups')

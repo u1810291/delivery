@@ -40,20 +40,6 @@ from api_pickup.serializers import (
 from rest_framework.permissions import IsAuthenticated
 
 
-
-class UserListView(generics.ListCreateAPIView):
-    """Handles creating and listing Users."""
-    queryset = User.objects.all()
-
-def create(self, request, *args, **kwargs):
-        serializer = RegisterUserSerializer(data=request.data)
-        if serializer.is_valid():
-            self.perform_create(serializer)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
 class GroupViewSet(viewsets.ViewSet):
     # permission_classes = (IsAuthenticated,)
     def list(self, request):
@@ -68,13 +54,14 @@ class GroupViewSet(viewsets.ViewSet):
             return Response(serializer_class.data, status=status.HTTP_201_CREATED)
         return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class UserViewSet(viewsets.ViewSet):
     # permission_classes = (IsAuthenticated,)
     def list(self, request):
         queryset = User.objects.all()
         serializer_class = UserSerializer(queryset, many=True)
         return Response(serializer_class.data)
-    def post(self, request):
+    def perform_create(self, serializer):
         serializer_class = UserSerializer(data=request.data)
         if serializer_class.is_valid():
             serializer_class.save()
