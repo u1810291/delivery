@@ -41,7 +41,7 @@ from rest_framework.permissions import IsAuthenticated
 
 
 class GroupViewSet(viewsets.ViewSet):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     def list(self, request):
         queryset = Group.objects.all()
         serializer_class = GroupSerializer(queryset, many=True)
@@ -56,7 +56,7 @@ class GroupViewSet(viewsets.ViewSet):
 
 
 class UserViewSet(viewsets.ViewSet):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     def list(self, request):
         queryset = User.objects.all()
         serializer_class = UserSerializer(queryset, many=True)
