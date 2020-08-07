@@ -34,8 +34,7 @@ from api_pickup.serializers import (
     ProductTypeSerializer, 
     StockSerializer, 
     StatusCatalogSerializer, 
-    LocationsSerializer,
-    RegisterUserSerializer)
+    LocationsSerializer)
 
 from rest_framework.permissions import IsAuthenticated
 
@@ -84,7 +83,7 @@ class RoleViewSet(viewsets.ViewSet):
         return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Users
-class PersonViewSet(viewsets.ModelViewSet):
+class PersonViewSet(viewsets.ViewSet):
     permission_classes = (IsAuthenticated,)
     def list(self, request):
         queryset = Person.objects.all()
